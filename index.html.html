@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Конспектор — разборы тем от школьников</title>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#f6f8fc;--card:#fff;--ink:#1c2b5a;--text:#232a3d;--muted:#667089;--line:#d9e0ee;--hl:#ffe36e;--accent:#2f4bd8;--accent-t:#fff;--danger:#d6454b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#12172a;--card:#1a2140;--ink:#c9d4ff;--text:#e4e8f5;--muted:#99a2c0;--line:#2c3560;--hl:#6b5a00;--accent:#7d93ff;--accent-t:#10163a;--danger:#ff7a80;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#12172a;--card:#1a2140;--ink:#c9d4ff;--text:#e4e8f5;--muted:#99a2c0;--line:#2c3560;--hl:#6b5a00;--accent:#7d93ff;--accent-t:#10163a;--danger:#ff7a80;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Onest,system-ui,sans-serif;color:var(--text);background-color:var(--paper);
+background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:28px 28px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--paper);z-index:10}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px 64px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:20px 0 12px}
+.logo{font-family:Caveat,cursive;font-size:2.2rem;color:var(--ink);margin-right:auto;line-height:1}
+.logo span{background:linear-gradient(transparent 55%,var(--hl) 55%);padding:0 4px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1.5px solid var(--ink);background:var(--card);border-radius:8px;padding:8px 14px;color:var(--ink);font-weight:500}
+button:hover{background:var(--hl)}
+button.main{background:var(--accent);color:var(--accent-t);border-color:var(--accent)}
+button.main:hover{filter:brightness(1.1);background:var(--accent)}
+button.link{border:0;background:none;padding:0;text-decoration:underline;color:var(--muted)}
+button.link:hover{background:none;color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.hero{margin:12px 0 20px;max-width:640px}
+.hero h1{font-size:clamp(1.6rem,4.5vw,2.4rem);line-height:1.15;margin:0 0 8px;color:var(--ink)}
+.hero p{margin:0;color:var(--muted)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.bar input[type=search]{flex:1;min-width:180px}
+input,select,textarea{border:1.5px solid var(--line);background:var(--card);border-radius:8px;padding:9px 12px;width:100%}
+.bar select{width:auto}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{border-radius:999px;padding:5px 12px;font-size:.9rem;border-color:var(--line);color:var(--text)}
+.chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tabs{display:flex;gap:18px;border-bottom:2px solid var(--line);margin-bottom:16px}
+.tab{border:0;border-radius:0;background:none;padding:8px 0;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px}
+.tab:hover{background:none;color:var(--ink)}
+.tab.on{color:var(--ink);border-bottom-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.post{background:var(--card);border:1.5px solid var(--line);border-radius:6px;padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:8px;position:relative}
+.post:hover{border-color:var(--ink)}
+.post h3{margin:0;font-size:1.1rem;color:var(--ink)}
+.tag{align-self:flex-start;font-size:.8rem;background:var(--hl);color:var(--text);padding:1px 8px;border-radius:4px}
+:root[data-theme="dark"] .tag,:root:not([data-theme="light"]) .tag{color:var(--text)}
+.post p{margin:0;color:var(--muted);font-size:.93rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-top:auto}
+.empty{grid-column:1/-1;padding:32px;text-align:center;color:var(--muted);background:var(--card);border:1.5px dashed var(--line);border-radius:6px}
+dialog{border:1.5px solid var(--ink);border-radius:10px;padding:0;width:min(640px,calc(100% - 24px));background:var(--card);color:var(--text);max-height:90vh}
+dialog::backdrop{background:rgba(10,15,40,.55)}
+.dlg{padding:20px;display:flex;flex-direction:column;gap:12px}
+.dlg h2{margin:0;color:var(--ink)}
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+label{font-size:.9rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+textarea{min-height:180px;resize:vertical}
+.body{white-space:pre-wrap;line-height:1.7}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.on-mark{background:var(--hl);color:var(--text)}
+.cm{border-left:3px solid var(--hl);padding:2px 10px;margin:8px 0}
+.cm b{color:var(--ink)}
+.err{color:var(--danger);font-size:.9rem;min-height:1.2em}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:8px;z-index:20}
+.user{display:flex;gap:10px;align-items:center;font-size:.95rem}
+@media (prefers-reduced-motion:no-preference){.post{transition:border-color .15s}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo"><span>Конспектор</span></div>
+  <div class="user" id="user"></div>
+</header>
+
+<section class="hero">
+  <h1>Разборы тем от таких же школьников</h1>
+  <p>Находи объяснения по предметам и темам, сохраняй полезное в закладки и делись своими конспектами.</p>
+</section>
+
+<div class="bar">
+  <input type="search" id="q" placeholder="Поиск по названию и тексту" aria-label="Поиск">
+  <select id="grade" aria-label="Класс"><option value="">Все классы</option></select>
+  <select id="sort" aria-label="Сортировка"><option value="new">Сначала новые</option><option value="top">Сначала полезные</option></select>
+  <button class="main" id="add">Написать разбор</button>
+</div>
+<div class="chips" id="chips"></div>
+<div class="tabs" id="tabs">
+  <button class="tab on" data-t="all">Все материалы</button>
+  <button class="tab" data-t="marks">Закладки</button>
+  <button class="tab" data-t="mine">Мои</button>
+</div>
+<div class="grid" id="list"></div>
+</div>
+
+<dialog id="authDlg"><div class="dlg">
+  <h2 id="authTitle">Вход</h2>
+  <label>Логин<input id="aName" autocomplete="username" maxlength="20"></label>
+  <label>Пароль<input id="aPass" type="password" autocomplete="current-password"></label>
+  <div class="err" id="aErr"></div>
+  <div class="actions"><button class="main" id="aGo">Войти</button><button id="aSwitch" class="link">Нет аккаунта? Зарегистрироваться</button><button class="link" data-close>Отмена</button></div>
+</div></dialog>
+
+<dialog id="newDlg"><div class="dlg">
+  <h2>Новый разбор</h2>
+  <label>Заголовок<input id="nTitle" maxlength="90" placeholder="Например: Как решать квадратные уравнения"></label>
+  <div class="row">
+    <label>Предмет<select id="nSub"></select></label>
+    <label>Класс<select id="nGrade"></select></label>
+  </div>
+  <label>Тема<input id="nTopic" maxlength="60" placeholder="Например: Дискриминант"></label>
+  <label>Объяснение своими словами<textarea id="nText" placeholder="Пиши коротко и по шагам. Фото страниц учебников не публикуй."></textarea></label>
+  <div class="err" id="nErr"></div>
+  <div class="actions"><button class="main" id="nGo">Опубликовать</button><button class="link" data-close>Отмена</button></div>
+</div></dialog>
+
+<dialog id="viewDlg"><div class="dlg" id="view"></div></dialog>
+
+<script>
+var SUBJECTS=["Информатика","Математика","Физика","Русский язык","История","Биология","Химия","Английский"];
+var GRADES=[5,6,7,8,9,10,11];
+var KEY="konspektor-v1";
+var mem=null;
+function load(){try{var r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return mem}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){mem=db}}
+var db=load()||{users:[],session:null,marks:{},posts:[
+ {id:1,title:"Как работает двоичная система",subject:"Информатика",grade:8,topic:"Системы счисления",author:"Алина",date:"2026-10-02",
+  text:"Мы считаем в десятичной системе, потому что у нас десять цифр. Компьютер использует две: 0 и 1.\n\nЧтобы перевести число в двоичную систему, делим его на 2 и записываем остатки снизу вверх.\n\nПример: 13 → 13/2=6 (ост. 1), 6/2=3 (ост. 0), 3/2=1 (ост. 1), 1/2=0 (ост. 1). Читаем снизу: 1101.",likes:["Макс","Дана"],comments:[{a:"Макс",t:"Наконец понял, как читать остатки!"}]},
+ {id:2,title:"Дискриминант без паники",subject:"Математика",grade:8,topic:"Квадратные уравнения",author:"Дана",date:"2026-10-09",
+  text:"Для уравнения ax²+bx+c=0 считаем D=b²−4ac.\n\nЕсли D>0 — два корня, если D=0 — один, если D<0 — корней нет.\n\nКорни: x=(−b±√D)/(2a). Всегда сначала проверяй, что уравнение приведено к стандартному виду.",likes:["Алина"],comments:[]},
+ {id:3,title:"Закон Ома простыми словами",subject:"Физика",grade:8,topic:"Электрический ток",author:"Макс",date:"2026-10-15",
+  text:"Сила тока зависит от напряжения и сопротивления: I=U/R.\n\nПредставь трубу с водой: напряжение — это напор, сопротивление — узкое место в трубе, а ток — сколько воды протекает.",likes:[],comments:[]}
+],nextId:4};
+if(!db.marks)db.marks={};
+var $=function(i){return document.getElementById(i)};
+var state={tab:"all",sub:"",authMode:"login"};
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function toast(m){var t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2200)}
+function hash(s){var h=5381;for(var i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return String(h)}
+function me(){return db.session}
+function needLogin(){if(me())return true;openAuth("login");return false}
+
+function renderUser(){
+  var u=$("user");
+  u.innerHTML=me()?'Привет, <b>'+esc(me())+'</b> <button id="out">Выйти</button>':'<button id="in" class="main">Войти</button>';
+  var o=$("out");if(o)o.onclick=function(){db.session=null;save();renderUser();render()};
+  var i=$("in");if(i)i.onclick=function(){openAuth("login")};
+}
+function renderChips(){
+  var h='<button class="chip'+(state.sub===""?' on':'')+'" data-s="">Все предметы</button>';
+  SUBJECTS.forEach(function(s){h+='<button class="chip'+(state.sub===s?' on':'')+'" data-s="'+s+'">'+s+'</button>'});
+  $("chips").innerHTML=h;
+}
+function render(){
+  var q=$("q").value.trim().toLowerCase(),g=$("grade").value,sort=$("sort").value;
+  var m=db.marks[me()]||[];
+  var arr=db.posts.filter(function(p){
+    if(state.sub&&p.subject!==state.sub)return false;
+    if(g&&String(p.grade)!==g)return false;
+    if(q&&(p.title+" "+p.text+" "+p.topic).toLowerCase().indexOf(q)<0)return false;
+    if(state.tab==="marks"&&m.indexOf(p.id)<0)return false;
+    if(state.tab==="mine"&&p.author!==me())return false;
+    return true});
+  arr.sort(function(a,b){return sort==="top"?b.likes.length-a.likes.length:b.id-a.id});
+  var h=arr.map(function(p){
+    return '<article class="post" tabindex="0" data-id="'+p.id+'"><span class="tag">'+esc(p.subject)+', '+p.grade+' класс</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.text)+'</p><div class="meta"><span>'+esc(p.author)+'</span><span>Полезно: '+p.likes.length+' · Комментарии: '+p.comments.length+'</span></div></article>'}).join("");
+  if(!h){
+    var msg=state.tab==="marks"?(me()?"В закладках пока пусто. Откройте разбор и нажмите «В закладки».":"Войдите, чтобы пользоваться закладками."):state.tab==="mine"?(me()?"Вы ещё ничего не публиковали. Нажмите «Написать разбор».":"Войдите, чтобы увидеть свои материалы."):"Ничего не найдено. Измените запрос или напишите первый разбор по этой теме.";
+    h='<div class="empty">'+msg+'</div>'}
+  $("list").innerHTML=h;
+}
+function openPost(id){
+  var p=db.posts.filter(function(x){return x.id===id})[0];if(!p)return;
+  var liked=p.likes.indexOf(me())>=0,marked=(db.marks[me()]||[]).indexOf(id)>=0;
+  var cm=p.comments.map(function(c){return '<div class="cm"><b>'+esc(c.a)+':</b> '+esc(c.t)+'</div>'}).join("")||'<p style="color:var(--muted)">Комментариев пока нет.</p>';
+  $("view").innerHTML='<span class="tag">'+esc(p.subject)+', '+p.grade+' класс · '+esc(p.topic||"без темы")+'</span><h2>'+esc(p.title)+'</h2><div class="meta" style="margin:0"><span>Автор: '+esc(p.author)+', '+p.date+'</span></div><div class="body">'+esc(p.text)+'</div>'
+  +'<div class="actions"><button id="vLike" class="'+(liked?'on-mark':'')+'">Полезно: '+p.likes.length+'</button><button id="vMark" class="'+(marked?'on-mark':'')+'">'+(marked?'В закладках':'В закладки')+'</button>'+(p.author===me()?'<button id="vDel">Удалить</button>':'')+'<button class="link" data-close>Закрыть</button></div>'
+  +'<h3 style="margin:8px 0 0">Комментарии</h3>'+cm+'<div class="row"><input id="vCm" maxlength="300" placeholder="Что было полезно или непонятно?" aria-label="Комментарий"><button id="vSend" style="flex:0 0 auto">Отправить</button></div>';
+  $("vLike").onclick=function(){if(!needLogin())return;var i=p.likes.indexOf(me());if(i<0)p.likes.push(me());else p.likes.splice(i,1);save();openPost(id);render()};
+  $("vMark").onclick=function(){if(!needLogin())return;var a=db.marks[me()]=db.marks[me()]||[];var i=a.indexOf(id);if(i<0)a.push(id);else a.splice(i,1);save();openPost(id);render()};
+  var d=$("vDel");if(d)d.onclick=function(){if(confirm("Удалить этот разбор?")){db.posts=db.posts.filter(function(x){return x.id!==id});save();$("viewDlg").close();render();toast("Разбор удалён")}};
+  $("vSend").onclick=function(){if(!needLogin())return;var t=$("vCm").value.trim();if(!t)return;p.comments.push({a:me(),t:t});save();openPost(id);render()};
+  if(!$("viewDlg").open)$("viewDlg").showModal();
+}
+function openAuth(mode){
+  state.authMode=mode;var reg=mode==="reg";
+  $("authTitle").textContent=reg?"Регистрация":"Вход";
+  $("aGo").textContent=reg?"Создать аккаунт":"Войти";
+  $("aSwitch").textContent=reg?"Уже есть аккаунт? Войти":"Нет аккаунта? Зарегистрироваться";
+  $("aErr").textContent="";
+  if($("viewDlg").open)$("viewDlg").close();
+  if(!$("authDlg").open)$("authDlg").showModal();
+}
+$("aSwitch").onclick=function(){openAuth(state.authMode==="reg"?"login":"reg")};
+$("aGo").onclick=function(){
+  var n=$("aName").value.trim(),p=$("aPass").value;
+  if(n.length<2)return $("aErr").textContent="Логин должен быть не короче 2 символов.";
+  if(p.length<4)return $("aErr").textContent="Пароль должен быть не короче 4 символов.";
+  var u=db.users.filter(function(x){return x.name.toLowerCase()===n.toLowerCase()})[0];
+  if(state.authMode==="reg"){
+    if(u)return $("aErr").textContent="Такой логин уже занят.";
+    db.users.push({name:n,pass:hash(p)});db.session=n;
+  }else{
+    if(!u||u.pass!==hash(p))return $("aErr").textContent="Неверный логин или пароль.";
+    db.session=u.name;
+  }
+  save();$("authDlg").close();$("aPass").value="";renderUser();render();toast("Добро пожаловать, "+db.session+"!");
+};
+$("add").onclick=function(){if(!needLogin())return;$("nErr").textContent="";$("newDlg").showModal()};
+$("nGo").onclick=function(){
+  var t=$("nTitle").value.trim(),x=$("nText").value.trim();
+  if(t.length<5)return $("nErr").textContent="Добавьте заголовок (минимум 5 символов).";
+  if(x.length<30)return $("nErr").textContent="Объяснение слишком короткое: напишите хотя бы 30 символов.";
+  db.posts.push({id:db.nextId++,title:t,subject:$("nSub").value,grade:+$("nGrade").value,topic:$("nTopic").value.trim(),author:me(),date:new Date().toISOString().slice(0,10),text:x,likes:[],comments:[]});
+  save();["nTitle","nTopic","nText"].forEach(function(i){$(i).value=""});$("newDlg").close();state.tab="all";syncTabs();render();toast("Разбор опубликован");
+};
+function syncTabs(){document.querySelectorAll(".tab").forEach(function(b){b.classList.toggle("on",b.dataset.t===state.tab)})}
+$("tabs").onclick=function(e){var b=e.target.closest(".tab");if(!b)return;state.tab=b.dataset.t;syncTabs();render()};
+$("chips").onclick=function(e){var b=e.target.closest(".chip");if(!b)return;state.sub=b.dataset.s;renderChips();render()};
+$("list").onclick=function(e){var c=e.target.closest(".post");if(c)openPost(+c.dataset.id)};
+$("list").onkeydown=function(e){if(e.key==="Enter"){var c=e.target.closest(".post");if(c)openPost(+c.dataset.id)}};
+["q","grade","sort"].forEach(function(i){$(i).oninput=render});
+document.addEventListener("click",function(e){if(e.target.hasAttribute&&e.target.hasAttribute("data-close")){var d=e.target.closest("dialog");if(d)d.close()}});
+$("nSub").innerHTML=SUBJECTS.map(function(s){return "<option>"+s+"</option>"}).join("");
+$("nGrade").innerHTML=GRADES.map(function(g){return "<option>"+g+"</option>"}).join("");
+$("grade").innerHTML+=GRADES.map(function(g){return '<option value="'+g+'">'+g+" класс</option>"}).join("");
+renderUser();renderChips();render();
+</script>
+</body>
+</html>
